@@ -1,4 +1,6 @@
-﻿namespace CityInfo.API.Models
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace CityInfo.API.Models
 {
     public class CityDto
     {
@@ -13,4 +15,5 @@
         public ICollection<PointOfInterestDto> PointsOfInterest { get; set; } 
             = new List<PointOfInterestDto>();
     }
+
 }
