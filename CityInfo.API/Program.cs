@@ -17,6 +17,8 @@ namespace CityInfo.API
             }).AddNewtonsoftJson()
                 .AddXmlDataContractSerializerFormatters();
 
+
+            builder.Services.AddProblemDetails(); //Good for front facing user environment
             //builder.Services.AddProblemDetails(options =>
             //{
             //    options.CustomizeProblemDetails = ctx =>
@@ -37,6 +39,11 @@ namespace CityInfo.API
 
 
             // Configure the HTTP request pipeline.
+
+            if (!app.Environment.IsDevelopment())
+            {
+                app.UseExceptionHandler();
+            }
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
