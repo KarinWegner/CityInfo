@@ -45,11 +45,11 @@ namespace CityInfo.API
 
         #if DEBUG
             builder.Services.AddTransient<IMailService, LocalMailService>();
-        #else
+#else
 
             builder.Services.AddTransient<IMailService, CloudMailService>();
-        #endif
-
+#endif
+            builder.Services.AddSingleton<CitiesDataStore>();
             var app = builder.Build();
 
 
