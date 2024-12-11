@@ -145,25 +145,23 @@ namespace CityInfo.API.Controllers
         }
 
         [HttpDelete("{pointofinterestId}")]
-        public ActionResult DeletePointOfInterest(int cityId, int pointofinterestId)
+        public async Task<ActionResult> DeletePointOfInterest(int cityId, int pointofinterestId)
         {
-            var city = _citiesDataStore.Cities.FirstOrDefault(c => c.Id == cityId);
-            if (city == null)
+            if (!await _cityInfoRepository.CityExistsAsync(cityId))
             {
                 return NotFound();
             }
 
-            var pointOfInterestFromStore = city.PointsOfInterest
-                .FirstOrDefault(c => c.Id == pointofinterestId);
-            if (pointOfInterestFromStore == null)
+            var pointOfInterestEntity = await _cityInfoRepository.GetPointOfInterestForCityAsync(cityId, pointofinterestId);
+            if (pointOfInterestEntity == null)
             {
                 return NotFound();
             }
 
-            city.PointsOfInterest.Remove(pointOfInterestFromStore);
+            _cityInfoRepository.DeletePointOfInterest(pointOfInterestEntity);
 
             _mailService.Send("Point of interest deleted.",
-                $"Point of interest {pointOfInterestFromStore.Name} with id {pointofinterestId} was deleted.");
+                $"Point of interest {pointOfInterestEntity.Name} with id {pointofinterestId} was deleted.");
             return NoContent();
         }
     }
