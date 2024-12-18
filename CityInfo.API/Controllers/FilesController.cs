@@ -8,8 +8,8 @@ namespace CityInfo.API.Controllers
     
     
 
-    [Route("api/files")]
-    [Authorize]
+    [Route("api/v{version:apiVersion}/files")]
+    //[Authorize]
     [ApiController]
     public class FilesController : ControllerBase
     {
