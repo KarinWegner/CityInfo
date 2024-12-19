@@ -100,7 +100,11 @@ namespace CityInfo.API
                 setupAction.ReportApiVersions = true;
                 setupAction.AssumeDefaultVersionWhenUnspecified = true;
                 setupAction.DefaultApiVersion = new ApiVersion(1, 0);
-            }).AddMvc();
+            }).AddMvc()
+            .AddApiExplorer(setupAction =>
+            {
+                setupAction.SubstituteApiVersionInUrl = true;
+            });
 
             var app = builder.Build();
 
